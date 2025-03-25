@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: shortenservice
+    profiles:
+      active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shortendb?currentSchema=${spring.application.name}
+    username: root
+    password: secret
+  flyway:
+    schemas: ${spring.application.name}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${spring.application.name}
