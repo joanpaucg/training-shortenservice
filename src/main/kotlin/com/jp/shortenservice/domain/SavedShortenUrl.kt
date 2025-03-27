@@ -5,7 +5,7 @@ import java.time.LocalDateTime
  class SavedShortenUrl(
         val id: Long,
          originalUrl: String,
-         shortCode: String,
+         shortCode: ShortCode,
          createdAt: LocalDateTime,
          updatedAt: LocalDateTime
 ): ShortenUrl(

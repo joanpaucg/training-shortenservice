@@ -5,6 +5,8 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.OneToOne
 
 @Entity(name = "shorten_url")
 class ShortenUrlEntity(
@@ -12,7 +14,9 @@ class ShortenUrlEntity(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
         val originalUrl: String,
-        val shortCode: String,
+        @OneToOne
+        @JoinColumn(name = "short_code_id", referencedColumnName = "id")
+        val shortCode: ShortCodeEntity,
         val createdAt: LocalDateTime,
         val updatedAt: LocalDateTime
 )

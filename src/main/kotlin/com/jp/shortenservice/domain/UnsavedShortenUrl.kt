@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 class UnsavedShortenUrl(
         originalUrl:String,
-        shortCode: String
+        shortCode: ShortCode
 ): ShortenUrl(
         originalUrl = originalUrl,
         shortCode = shortCode,

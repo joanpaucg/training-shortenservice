@@ -3,7 +3,7 @@ import java.time.LocalDateTime
 
 sealed class ShortenUrl(
          val originalUrl: String,
-         val shortCode: String,
+         val shortCode: ShortCode,
          val createdAt: LocalDateTime,
          val updatedAt: LocalDateTime
 )

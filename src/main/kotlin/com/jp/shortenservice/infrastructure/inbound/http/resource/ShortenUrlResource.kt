@@ -15,19 +15,10 @@ data class ShortenUrlResource(
             ShortenUrlResource(
                 id = id.toString(),
                 url = originalUrl,
-                shortCode = shortCode,
+                shortCode = shortCode.value,
                 createdAt = createdAt.toString(),
                 updatedAt = updatedAt.toString()
             )
-        fun savedShortenUrlToResource(savedShortenUrl: SavedShortenUrl): ShortenUrlResource {
-            return ShortenUrlResource(
-                id = savedShortenUrl.id.toString(),
-                url = savedShortenUrl.originalUrl,
-                shortCode = savedShortenUrl.shortCode,
-                createdAt = savedShortenUrl.createdAt.toString(),
-                updatedAt = savedShortenUrl.updatedAt.toString()
-            )
-        }
 
     }
 

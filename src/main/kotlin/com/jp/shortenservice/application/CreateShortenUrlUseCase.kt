@@ -1,15 +1,13 @@
 package com.jp.shortenservice.application
 
-import com.jp.shortenservice.domain.SavedShortenUrl
-import com.jp.shortenservice.domain.ShortenUrl
-import com.jp.shortenservice.domain.ShortenUrlRepository
-import com.jp.shortenservice.domain.UnsavedShortenUrl
+import com.jp.shortenservice.domain.*
+import com.jp.shortenservice.domain.service.GenerateUniqueShortCodeService
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
-class CreateShortenUrlUseCase(val shortenUrlRepository: ShortenUrlRepository) {
+class CreateShortenUrlUseCase(private val shortenUrlRepository: ShortenUrlRepository,private val shortCodeService: GenerateUniqueShortCodeService) {
     fun execute(url: String): SavedShortenUrl {
 
         val shortenUrl = UnsavedShortenUrl(
@@ -19,8 +17,8 @@ class CreateShortenUrlUseCase(val shortenUrlRepository: ShortenUrlRepository) {
         return shortenUrlRepository.save(shortenUrl)
 
     }
-    private fun generateShortCode(): String {
+    private fun generateShortCode(): ShortCode {
         // Implement your logic to generate a random short code
-        return UUID.randomUUID().toString().substring(0, 6)
+        return shortCodeService.generateUniqueShortCode()
     }
 }
