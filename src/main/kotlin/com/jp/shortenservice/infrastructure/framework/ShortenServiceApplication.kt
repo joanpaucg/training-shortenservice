@@ -1,4 +1,4 @@
-package com.jp.shortenservice
+package com.jp.shortenservice.infrastructure.framework
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
