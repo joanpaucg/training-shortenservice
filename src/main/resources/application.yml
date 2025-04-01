@@ -1,8 +1,8 @@
 spring:
   application:
     name: shortenservice
-    profiles:
-      active: dev
+  profiles:
+    active: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/shortendb?currentSchema=${spring.application.name}
     username: root

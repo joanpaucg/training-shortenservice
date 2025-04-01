@@ -4,5 +4,7 @@ import com.jp.shortenservice.domain.ShortenUrl
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ShortenUrlJpaRepository : JpaRepository<ShortenUrlEntity, Long> {
+    fun findByShortCodeValue(shortCode: String): ShortenUrlEntity?
+    fun deleteByShortCodeValue(shortCode: String)
 
 }

@@ -9,7 +9,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToOne
 
 @Entity(name = "shorten_url")
-class ShortenUrlEntity(
+data class ShortenUrlEntity(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,

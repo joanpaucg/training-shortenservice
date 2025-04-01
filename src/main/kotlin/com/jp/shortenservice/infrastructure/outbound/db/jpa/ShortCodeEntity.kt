@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 
 @Entity(name = "short_code")
-class ShortCodeEntity (
+data class ShortCodeEntity (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
