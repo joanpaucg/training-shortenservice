@@ -1,14 +1,12 @@
 package com.jp.shortenservice.infrastructure.inbound.http
 
-import com.jp.shortenservice.application.CreateShortenUrlUseCase
-import com.jp.shortenservice.application.DeleteShortenUrlUseCase
-import com.jp.shortenservice.application.GetShortenUrlUseCase
-import com.jp.shortenservice.application.UpdateShortenUrlUseCase
+import com.jp.shortenservice.application.*
 import com.jp.shortenservice.domain.SavedShortenUrl
 import com.jp.shortenservice.domain.ShortenUrl
 import com.jp.shortenservice.infrastructure.inbound.http.resource.CreateShortenUrlResource
 import com.jp.shortenservice.infrastructure.inbound.http.resource.ShortenUrlResource
 import com.jp.shortenservice.infrastructure.inbound.http.resource.ShortenUrlResource.Companion.toResource
+import com.jp.shortenservice.infrastructure.inbound.http.resource.StatsShortenUrlResource
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
@@ -26,7 +24,8 @@ import org.springframework.web.bind.annotation.RestController
 class ShortenUrlController(private val createShortenUrlUseCase: CreateShortenUrlUseCase,
                            private val getShortenUrlUseCase: GetShortenUrlUseCase,
                            private val updateShortenUrlUseCase: UpdateShortenUrlUseCase,
-                            private val deleteShortenUrlUseCase: DeleteShortenUrlUseCase
+                           private val deleteShortenUrlUseCase: DeleteShortenUrlUseCase,
+                            private val getStatsShortenUrlUseCase: GetStatsShortenUrlUseCase
         ) {
 
     @PostMapping
@@ -55,6 +54,25 @@ class ShortenUrlController(private val createShortenUrlUseCase: CreateShortenUrl
     fun deleteShortenUrl(@PathVariable("shortCode") shortCode:String){
         // Implement your logic to delete the shorten URL from the short code
         deleteShortenUrlUseCase.execute(shortCode)
+
+    }
+    /**/
+    @GetMapping("/{shortCode}/stats")
+    fun getStatsShortenUrl(@PathVariable("shortCode") shortCode:String):ResponseEntity<StatsShortenUrlResource> {
+        // Implement your logic to get the stats of the shorten URL
+        val statsShortenUrl = getStatsShortenUrlUseCase.execute(shortCode)
+        statsShortenUrl?.let {
+            return ResponseEntity.ok(
+                StatsShortenUrlResource(
+                        id = statsShortenUrl.id.toString(),
+                        shortCode = statsShortenUrl.shortCode,
+                        originalUrl = statsShortenUrl.originalUrl,
+                        createdAt = statsShortenUrl.createdAt.toString(),
+                        updatedAt = statsShortenUrl.updatedAt.toString(),
+                        accessCount = statsShortenUrl.accessCount
+                )
+            )
+        } ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).build()
 
     }
 }

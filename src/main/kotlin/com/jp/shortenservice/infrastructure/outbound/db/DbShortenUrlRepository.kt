@@ -7,6 +7,7 @@ import com.jp.shortenservice.infrastructure.outbound.db.jpa.ShortenUrlEntity
 import com.jp.shortenservice.infrastructure.outbound.db.jpa.ShortenUrlJpaRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class DbShortenUrlRepository (
@@ -47,7 +48,7 @@ class DbShortenUrlRepository (
     override fun updateByShortCode(shortCode: String, originalUrl: String): SavedShortenUrl? {
         val shortenUrlEntity = shortenUrlJpaRepository.findByShortCodeValue(shortCode)
         return shortenUrlEntity?.let {
-            val updatedEntity = shortenUrlEntity.copy(originalUrl = originalUrl)
+            val updatedEntity = shortenUrlEntity.copy(originalUrl = originalUrl, updatedAt = LocalDateTime.now())
             val savedEntity = shortenUrlJpaRepository.save(updatedEntity)
             SavedShortenUrl(
                 id = savedEntity.id!!,

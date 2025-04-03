@@ -5,5 +5,6 @@ sealed class ShortenUrl(
          val originalUrl: String,
          val shortCode: ShortCode,
          val createdAt: LocalDateTime,
-         val updatedAt: LocalDateTime
+         val updatedAt: LocalDateTime,
+
 )
