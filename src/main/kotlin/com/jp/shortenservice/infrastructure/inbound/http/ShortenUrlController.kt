@@ -1,14 +1,11 @@
 package com.jp.shortenservice.infrastructure.inbound.http
 
 import com.jp.shortenservice.application.*
-import com.jp.shortenservice.domain.SavedShortenUrl
-import com.jp.shortenservice.domain.ShortenUrl
 import com.jp.shortenservice.infrastructure.inbound.http.resource.CreateShortenUrlResource
 import com.jp.shortenservice.infrastructure.inbound.http.resource.ShortenUrlResource
 import com.jp.shortenservice.infrastructure.inbound.http.resource.ShortenUrlResource.Companion.toResource
 import com.jp.shortenservice.infrastructure.inbound.http.resource.StatsShortenUrlResource
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -60,16 +57,16 @@ class ShortenUrlController(private val createShortenUrlUseCase: CreateShortenUrl
     @GetMapping("/{shortCode}/stats")
     fun getStatsShortenUrl(@PathVariable("shortCode") shortCode:String):ResponseEntity<StatsShortenUrlResource> {
         // Implement your logic to get the stats of the shorten URL
-        val statsShortenUrl = getStatsShortenUrlUseCase.execute(shortCode)
-        statsShortenUrl?.let {
+        val response = getStatsShortenUrlUseCase.execute(shortCode)
+        response?.let {
             return ResponseEntity.ok(
                 StatsShortenUrlResource(
-                        id = statsShortenUrl.id.toString(),
-                        shortCode = statsShortenUrl.shortCode,
-                        originalUrl = statsShortenUrl.originalUrl,
-                        createdAt = statsShortenUrl.createdAt.toString(),
-                        updatedAt = statsShortenUrl.updatedAt.toString(),
-                        accessCount = statsShortenUrl.accessCount
+                        id = response.shortenUrl.id.toString(),
+                        shortCode = response.shortenUrl.shortCode.value,
+                        originalUrl = response.shortenUrl.originalUrl,
+                        createdAt = response.shortenUrl.createdAt.toString(),
+                        updatedAt = response.shortenUrl.updatedAt.toString(),
+                        accessCount = response.stats.accessCount
                 )
             )
         } ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).build()

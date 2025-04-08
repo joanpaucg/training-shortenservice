@@ -8,13 +8,11 @@ import java.util.UUID
 
 @Service
 class CreateShortenUrlUseCase(private val shortenUrlRepository: ShortenUrlRepository,private val shortCodeService: GenerateUniqueShortCodeService) {
-    fun execute(url: String): SavedShortenUrl {
-
-        val shortenUrl = UnsavedShortenUrl(
-                originalUrl = url,
-                shortCode = generateShortCode()
+    fun execute(url: String): ShortenUrl {
+        return shortenUrlRepository.save(
+            shortCode = generateShortCode().value,
+            url = url
         )
-        return shortenUrlRepository.save(shortenUrl)
 
     }
     private fun generateShortCode(): ShortCode {

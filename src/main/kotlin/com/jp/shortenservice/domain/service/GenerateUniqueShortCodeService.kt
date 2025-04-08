@@ -25,7 +25,7 @@ class GenerateUniqueShortCodeService(private val shortCodeRepository: ShortCodeR
         return shortCodeRepository.save(ShortCode(shortCodeValue))
     }
     private fun generateRandomString(length: Int = 6): String {
-        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        val chars = "abcdefghijklmnopqrstuvwxyz0123456789"
         return (1..length)
                 .map { chars.random() }
                 .joinToString("")
