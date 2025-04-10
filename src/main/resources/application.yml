@@ -13,3 +13,16 @@ spring:
     properties:
       hibernate:
         default_schema: ${spring.application.name}
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: shorten-url-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.trusted.packages: com.jp.shortenservice.domain
